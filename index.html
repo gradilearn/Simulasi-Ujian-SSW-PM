@@ -6,43 +6,75 @@
 <title>CBT SSW FULL SYSTEM</title>
 
 <style>
-  .card-home {
-  background: rgb(0, 0, 0);
-  padding: 50px 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-body {
+  body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  background: #dfe6ec;
+  /* Ganti 'background.jpg' dengan nama file gambar yang bby upload ke GitHub */
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), 
+              url('depan.BG.png'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 /* HEADER */
 .header {
-  background: #09458f;
+  /* Warna biru transparan */
+  background: rgba(9, 69, 143, 0.9);
+
   color: white;
   padding: 1px 20px;
   text-align: center;
-  /* Tambahkan ini supaya logo bisa diatur posisinya terhadap header */
-  position: relative; 
-  min-height: 30px; /* Sesuaikan dengan tinggi logo kamu */
- }
+
+  /* Agar logo bisa diatur */
+  position: relative;
+
+  min-height: 30px;
+
+  /* Efek glass */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  /* Border tipis transparan */
+  border: 1px solid rgba(255,255,255,0.9);
+
+  /* Shadow lembut */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
 
 /* HEADER UTAMA */
 #main-header {
-  background: #09458f;
+
+  /* Biru transparan */
+  background: rgba(16, 100, 204, 0.5);
+
   color: white;
+
   padding: 10px 20px;
+
   text-align: center;
-  position: relative; 
-  min-height: 30px; /* Menjaga tinggi kotak biru tetap stabil */
-  
-  /* Tambahkan ini agar semua isi di dalamnya selalu di tengah */
+
+  position: relative;
+
+  min-height: 30px;
+
+  /* Tengah horizontal & vertikal */
   display: flex;
-  flex-direction: column;   /* Menyusun h1 dan p secara vertikal */
-  justify-content: center;  /* Pusatkan secara vertikal (atas-bawah) */
-  align-items: center;      /* Pusatkan secara horizontal (kiri-kanan) */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* Efek kaca */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  /* Border glass */
+  border: 1px solid rgba(255,255,255,0.1);
+
+  /* Shadow lembut */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 /* LOGO (Hanya muncul di halaman depan) */
@@ -94,16 +126,6 @@ body {
   justify-content: center;
   align-items: center;
   padding: 30px 20px;
-}
-
-.card-home {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 800px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 /* TITLE */
@@ -279,7 +301,7 @@ ruby rt { font-size: 0.6em; }
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* SKOR */
+/* CBT SKOR */
 .review-item { text-align: left; border-bottom: 2px solid #eee; padding: 15px 0; }
 .status-benar { color: #2ecc71; font-weight: bold; }
 .status-salah { color: #e74c3c; font-weight: bold; }
@@ -303,7 +325,21 @@ ruby rt { font-size: 0.6em; }
   flex: 1; 
   transition: all 0.3s ease;
 }
+.card-home {
+  /* Transparansi 70% agar gambar belakang terlihat jelas */
+  background: rgba(255, 255, 255, 0.021);  
+  /* Efek Kaca Blur */
+  backdrop-filter: blur(15px); 
+  -webkit-backdrop-filter: blur(15px);
 
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 </style>
 
 </head>
@@ -1274,6 +1310,7 @@ function start(p) {
   else if (p === 10) soal = [...paket10];
   else soal = [];
 
+  document.body.style.background = "#dfe6ec";
   document.getElementById("home").style.display = "none";
   document.getElementById("cbt").style.display = "block";
   document.getElementById("header-text").style.display = "none"; 
@@ -1384,7 +1421,7 @@ function tampilkanReview() {
         <p><b>No ${i + 1}:</b> ${s.t}</p>
         <div class="${isBenar ? 'status-benar' : 'status-salah'}">${isBenar ? '✅ BENAR' : (jawaban[i] === undefined ? '⚪ KOSONG' : '❌ SALAH')}</div>
         <div class="kunci-jawaban">
-          <b>Kunci:</b> ${s.p[s.b]}<br>
+          <b>Jawaban Benar:</b> ${s.p[s.b]}<br>
           <b>Jawaban Kamu:</b> ${jawaban[i] !== undefined ? s.p[jawaban[i]] : "(Tidak dijawab)"}
         </div>
       </div>`;
