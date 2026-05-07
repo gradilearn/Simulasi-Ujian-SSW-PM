@@ -36,7 +36,7 @@ body {
   padding: 10px 20px;
   text-align: center;
   position: relative; 
-  min-height: 80px; /* Menjaga tinggi kotak biru tetap stabil */
+  min-height: 30px; /* Menjaga tinggi kotak biru tetap stabil */
   
   /* Tambahkan ini agar semua isi di dalamnya selalu di tengah */
   display: flex;
@@ -51,7 +51,7 @@ body {
   left: 1px;
   top: 50%;
   transform: translateY(-50%);
-  height: 150px;
+  height: 100px;
   width: auto;
 }
 
@@ -116,7 +116,7 @@ body {
 }
 
 .line {
-  width: 70%;
+  width: 75%;
   height: 4px;
   margin: 20px auto;
   background: linear-gradient(to right, #74b9ff, #f3719f);
@@ -278,7 +278,27 @@ ruby rt { font-size: 0.6em; }
 .status-benar { color: #2ecc71; font-weight: bold; }
 .status-salah { color: #e74c3c; font-weight: bold; }
 .kunci-jawaban { background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 5px; font-size: 0.9em; }
+
+.sidebar-wrapper {
+  transition: all 0.3s ease; /* Biar gerakannya mulus */
+  overflow: hidden;
+}
+
+.sidebar-tutup {
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Memastikan konten soal mengambil sisa ruang */
+.content {
+  flex: 1; 
+  transition: all 0.3s ease;
+}
 </style>
+
 </head>
 
 <body>
@@ -308,28 +328,45 @@ ruby rt { font-size: 0.6em; }
       <button class="btn" onclick="start(5)">Paket 5</button>
     </div>
     <div class="button-container">
-      <button class="btn" onclick="start(1)">Paket 6</button>
-      <button class="btn" onclick="start(2)">Paket 7</button>
-      <button class="btn" onclick="start(3)">Paket 8</button>
-      <button class="btn" onclick="start(4)">Paket 9</button>
-      <button class="btn" onclick="start(5)">Paket 10</button>
+      <button class="btn" onclick="start(6)">Paket 6</button>
+      <button class="btn" onclick="start(7)">Paket 7</button>
+      <button class="btn" onclick="start(8)">Paket 8</button>
+      <button class="btn" onclick="start(9)">Paket 9</button>
+      <button class="btn" onclick="start(10)">Paket 10</button>
     </div>
   </div>
   <div style="margin-top:30px; font-size:20px; color:#000000; text-align: center; font-weight: bold;">
     Kerjakan pelan-pelan aja ya bby, baca betul apa na minta soal !!😋💪✨
   </div>
 </div>
-
 <div id="cbt" style="display:none;">
+  <!-- Bagian Tombol Control -->
+  <div style="padding: 10px; background: #dfe6ec; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ccc;">
+    
+    <button id="btn-toggle" onclick="toggleSidebar()" style="
+      background: #2c3e50; 
+      color: white; 
+      border: none; 
+      padding: 10px 15px; 
+      cursor: pointer; 
+      border-radius: 5px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;">
+      <span id="icon-toggle">✕</span> <span id="text-toggle">Tutup</span>
+    </button>
+    <div id="timer">Waktu: 70:00</div>
+  </div>
+
   <div class="container">
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper" id="sidebar-konten">
       <div class="sidebar-title">NOMOR SOAL</div>
       <div class="progress-container"><div class="progress-bar" id="bar"></div></div>
       <div class="sidebar" id="sidebar"></div>
     </div>
 
     <div class="content">
-      <div id="timer">Waktu: 70:00</div>
       <div id="soal" class="soal"></div>
       <div id="gambarSoal" style="margin-bottom:20px;"></div>
 
@@ -1346,6 +1383,23 @@ function tampilkanReview() {
 
   reviewHTML += `<button class="btn" onclick="end()" style="width:100%; margin-top:20px; background:#7f8c8d;">TUTUP REVIEW</button></div>`;
   document.getElementById("hasil").innerHTML = reviewHTML;
+}
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar-konten");
+  const icon = document.getElementById("icon-toggle");
+  const text = document.getElementById("text-toggle");
+  
+  // Perintah untuk menyembunyikan/memunculkan
+  sidebar.classList.toggle("sidebar-tutup");
+  
+  // Mengubah tulisan di tombol secara otomatis
+  if (sidebar.classList.contains("sidebar-tutup")) {
+    icon.innerHTML = "☰";
+    text.innerHTML = "Tampilkan";
+  } else {
+    icon.innerHTML = "✕";
+    text.innerHTML = "Tutup";
+  }
 }
 </script>
 
