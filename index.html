@@ -279,7 +279,7 @@ ruby rt { font-size: 0.6em; }
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* REVIEW STYLES */
+/* SKOR */
 .review-item { text-align: left; border-bottom: 2px solid #eee; padding: 15px 0; }
 .status-benar { color: #2ecc71; font-weight: bold; }
 .status-salah { color: #e74c3c; font-weight: bold; }
@@ -400,7 +400,7 @@ ruby rt { font-size: 0.6em; }
 <div id="hasil" style="display:none;"></div>
 
 <script>
-  
+let sedangUjian = false; 
 let soal = [];
 let jawaban = [];
 let timer;
@@ -1257,7 +1257,8 @@ const paket10 = [];
 
 
 function start(p) {
-  waktu = 70 * 60;
+    sedangUjian = true; // <--- Tambahkan ini
+   waktu = 70 * 60;
   index = 0;
   clearInterval(timer);
 
@@ -1340,6 +1341,7 @@ function finishUjian() {
 }
 
 function end() {
+  sedangUjian = false;
   clearInterval(timer);
   let benar = 0, salah = 0, kosong = 0;
   soal.forEach((s, i) => {
@@ -1356,7 +1358,7 @@ function end() {
   layarHasil.style.display = "flex";
   layarHasil.innerHTML = `
   
-    <div style="font-size: 20px; padding: 40px; border-radius: 20px; background: white; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 90%; max-width: 450px;">
+    <div style="font-size: 20px; padding: 30px; border-radius: 20px; background: white; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 75%; max-width: 420px;">
       <h1>HASIL UJIAN</h1>
       <div style="font-size: 50px; font-weight: bold; color: #2980b9;">${totalSkor}/250</div>
       <div style="font-size: 24px; margin-bottom: 20px;">${persentase}%</div>
@@ -1364,8 +1366,8 @@ function end() {
         Benar: <b style="color:#2ecc71">${benar}</b> | Salah: <b style="color:#e74c3c">${salah}</b> | Tidak Terjawab: <b style="color:#e74c3c">${kosong}</b>
       </div>
       <h2 style="font-size: 40px; letter-spacing: 2px; color: ${statusColor};">${persentase >= 66 ? "PASSED 🎉" : "FAILED"}</h2>
-      <button class="btn" onclick="location.reload()" style="width:100%; margin-bottom:10px;">KEMBALI KE BERANDA</button>
-      <button class="btn" onclick="tampilkanReview()" style="width:100%; background:#3498db;">REVIEW JAWABAN</button>
+      <button class="btn" onclick="location.reload()" style="width:80%; margin: 0 auto; display: block; margin-bottom:10px;">KEMBALI KE BERANDA</button>
+      <button class="btn" onclick="tampilkanReview()" style="width:80%; margin: 0 auto; display: block; background:#3498db;">REVIEW JAWABAN</button>
     </div>
   `;
 }
@@ -1408,6 +1410,15 @@ function toggleSidebar() {
     text.innerHTML = "Tutup";
   }
 }
+// Peringatan saat reload halaman
+window.addEventListener('beforeunload', function (e) {
+    if (sedangUjian) {
+        const pesan = "Jangan di-refresh bby, nanti progres jawabanmu hilang!";
+        e.preventDefault();
+        e.returnValue = pesan;
+        return pesan;
+    }
+});
 </script>
 
 </body>
